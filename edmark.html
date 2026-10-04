@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edmark Egypt</title>
+    <!-- FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0d8a43 0%, #11998e 100%);
+            --accent-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            --card-gradient: linear-gradient(145deg, #ffffff 0%, #f3f8f4 100%);
+            --bg-gradient: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            --whatsapp-color: #25d366;
+            --text-dark: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* شبكة المنتجات الملونة */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: var(--card-gradient);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #ffffff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-bottom: 4px solid #11998e;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            color: #0b6630;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .product-caption {
+            font-size: 0.9rem;
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            background: #ffffff90;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-right: 3px solid #0d8a43;
+        }
+
+        .price-container {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: #d9232a;
+        }
+
+        .old-price-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .btn-select {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(13, 138, 67, 0.3);
+        }
+
+        .btn-select:hover {
+            opacity: 0.9;
+        }
+
+        /* نظام المحاسبة والنموذج */
+        .checkout-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            border: 2px solid #3b82f6;
+        }
+
+        .checkout-box h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid #93c5fd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f8fafc;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        /* عداد الكمية */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #93c5fd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+            background-color: #f8fafc;
+        }
+
+        .qty-btn {
+            width: 50px;
+            height: 45px;
+            background: #e2e8f0;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1e293b;
+            transition: background 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: transparent;
+        }
+
+        /* أزرار التأكيد والواتساب */
+        .btn-confirm {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: background 0.2s;
+        }
+
+        .btn-confirm:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-whatsapp-direct {
+            background: var(--whatsapp-color);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        /* ملخص الطلب */
+        .order-summary {
+            background: #eff6ff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: 1px solid #bfdbfe;
+        }
+
+        .order-summary h3 {
+            font-size: 1.1rem;
+            color: #1e40af;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.total {
+            border-top: 1px dashed #93c5fd;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #1e3a8a;
+        }
+
+        /* الأيقونة العائمة للواتساب */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--whatsapp-color);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 32px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .success-msg {
+            display: none;
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 1rem;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌱 Edmark Egypt 🇪🇬</h1>
+        <p>منتجات طبيعية 100% لصحة وحيوية أصلية | 🚚 الشحن مجاني لجميع المحافظات!</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- شبكة المنتجات الـ 12 مع الصور والكابشنات وسعر بدلاً من -->
+        <div class="products-grid">
+
+            <!-- 1. معجون أسنان سبلينا -->
+            <div class="product-card">
+                <img src="99403.jpg" alt="معجون أسنان سبلينا">
+                <div class="product-info">
+                    <div class="product-title">معجون أسنان سبلينا (3 أنابيب)</div>
+                    <div class="product-caption">🌿 غني بالكلوروفيل الطبيعي لحماية اللثة والأسنان، يمنع التكلسات والترسبات، يبيض الأسنان بأمان وخالي تماماً من الفلورايد لمنحك نفس زكي وانتعاش يدوم طويلاً.</div>
+                    <div class="price-container">
+                        <span class="current-price">1,650 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">2,000 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('معجون أسنان سبلينا', 1650)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 2. شيك أوف -->
+            <div class="product-card">
+                <img src="99240.jpg" alt="شيك أوف">
+                <div class="product-info">
+                    <div class="product-title">شيك أوف (Shake Off)</div>
+                    <div class="product-caption">🍃 المشروب المريح للقولون والجهاز الهضمي، يساعد على تنظيف القولون من السموم والمتراكمات والتخلص من الانتفاخات والغازات بشكل طبيعي وآمن.</div>
+                    <div class="price-container">
+                        <span class="current-price">1,500 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,850 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('شيك أوف (Shake Off)', 1500)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 3. سبلينا كلوروفيل -->
+            <div class="product-card">
+                <img src="99242.jpg" alt="سبلينا كلوروفيل">
+                <div class="product-info">
+                    <div class="product-title">سبلينا كلوروفيل (Splina)</div>
+                    <div class="product-caption">💚 إكسير الحياة والمناعة، يعمل على توازن حمضية وقلوية الجسم، تجديد خلايا الدم، وطرد السموم لتعزيز الطاقة والصحة العامة.</div>
+                    <div class="price-container">
+                        <span class="current-price">1,500 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,850 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('سبلينا كلوروفيل (Splina)', 1500)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 4. سبيرولينا هاوايان -->
+            <div class="product-card">
+                <img src="99390.jpg" alt="سبيرولينا هاوايان">
+                <div class="product-info">
+                    <div class="product-title">سبيرولينا هاوايان (Spirulina)</div>
+                    <div class="product-caption">🌊 الغذاء الخارق الغني بالفيتامينات والمعادن ومضادات الأكسدة، يساعد في تحسين المناعة، تنظيم مستويات السكر والكوليسترول، وتغذية الجسم بالحيوية.</div>
+                    <div class="price-container">
+                        <span class="current-price">2,500 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">2,900 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('سبيرولينا هاوايان', 2500)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 5. قهوة ترويكا -->
+            <div class="product-card">
+                <img src="99396.jpg" alt="قهوة ترويكا">
+                <div class="product-info">
+                    <div class="product-title">قهوة ترويكا (Cafe Troika)</div>
+                    <div class="product-caption">☕ القهوة الثلاثية الفاخرة الممزوجة بالجينسينغ والتونجكات علي والمشروم الشوكي، تمنحك طاقة مستدامة، تحسن الهضم، وتدعم المناعة بدون سكر.</div>
+                    <div class="price-container">
+                        <span class="current-price">1,800 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">2,200 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('قهوة ترويكا (Cafe Troika)', 1800)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 6. قهوة كافيه 73 -->
+            <div class="product-card">
+                <img src="99368.jpg" alt="قهوة كافيه 73">
+                <div class="product-info">
+                    <div class="product-title">قهوة كافيه 73 (Cafe 73)</div>
+                    <div class="product-caption">🍄 قهوة معززة بخلاصة فطر الجانوديرما (المشروم الريشي)، خالية من السكر وتساعد على تقوية المناعة وتجديد خلايا الجسم.</div>
+                    <div class="price-container">
+                        <span class="current-price">950 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,200 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('قهوة كافيه 73 (Cafe 73)', 950)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 7. قهوة الخميرة الحمراء -->
+            <div class="product-card">
+                <img src="99302.jpg" alt="قهوة الخميرة الحمراء">
+                <div class="product-info">
+                    <div class="product-title">قهوة الخميرة الحمراء (Red Yeast)</div>
+                    <div class="product-caption">❤️ القهوة الصحية الداعمة لصحة القلب، تساعد على خفض الكوليسترول الضار وتنشيط الدورة الدموية بطعم رائع.</div>
+                    <div class="price-container">
+                        <span class="current-price">900 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,150 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('قهوة الخميرة الحمراء', 900)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 8. قهوة الجينسينغ -->
+            <div class="product-card">
+                <img src="99294.jpg" alt="قهوة الجينسينغ">
+                <div class="product-info">
+                    <div class="product-title">قهوة الجينسينغ (Edmark Cafe)</div>
+                    <div class="product-caption">⚡ مزيج مميز من القهوة العربية والجينسينغ الطبيعي لشحن طاقتك وتركيزك وتقليل التعب والإرهاق اليومي.</div>
+                    <div class="price-container">
+                        <span class="current-price">800 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,000 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('قهوة الجينسينغ', 800)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 9. فيري بيري -->
+            <div class="product-card">
+                <img src="99393.jpg" alt="فيري بيري">
+                <div class="product-info">
+                    <div class="product-title">فيري بيري (Very Berry)</div>
+                    <div class="product-caption">🍓 مشروب التوت الطبيعي الغني بمضادات الأكسدة، يدعم وظائف المناعة، يعزز التركيز والنشاط الذهني، وسهل الهضم لطاقة وحيوية طوال اليوم.</div>
+                    <div class="price-container">
+                        <span class="current-price">600 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">800 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('فيري بيري (Very Berry)', 600)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 10. كو كولاجين -->
+            <div class="product-card">
+                <img src="99405.jpg" alt="كو كولاجين">
+                <div class="product-info">
+                    <div class="product-title">كو كولاجين (CoCollagen)</div>
+                    <div class="product-caption">✨ مشروب شوكولاتة طبيعي مغذي يعمل على تجديد الكولاجين وصحة البشرة، يدعم صحة المفاصل والعظام، يعزز مستويات الطاقة وغني بمضادات الأكسدة لمظهر أكثر شباباً.</div>
+                    <div class="price-container">
+                        <span class="current-price">1,200 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,500 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('كو كولاجين (CoCollagen)', 1200)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 11. بايو إلكسير -->
+            <div class="product-card">
+                <img src="99407.jpg" alt="بايو إلكسير">
+                <div class="product-info">
+                    <div class="product-title">بايو إلكسير (Bio-Elixir)</div>
+                    <div class="product-caption">🌟 محفز هرمون النمو الطبيعي النباتي 100%، يساعد على تجديد العضلات والأنسجة، تعزيز المناعة والصحة العامة، تجديد الطاقة والحيوية، ودعم العظام والمفاصل ونضارة البشرة.</div>
+                    <div class="price-container">
+                        <span class="current-price">3,600 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">4,200 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('بايو إلكسير (Bio-Elixir)', 3600)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+            <!-- 12. إيدمارك موكا -->
+            <div class="product-card">
+                <img src="99409.jpg" alt="إيدمارك موكا">
+                <div class="product-info">
+                    <div class="product-title">إيدمارك موكا (Edmark Mocha)</div>
+                    <div class="product-caption">☕ مزيج فاخر يجمع بين القهوة والشوكولاتة ومستخلص الجانوديرما والجينسينغ، يعزز صحة الجسم والقلب، يحسن الطاقة والتركيز، وهو مضاد طبيعي للأكسدة ونباتي تماماً.</div>
+                    <div class="price-container">
+                        <span class="current-price">999 ج.م</span>
+                        <span class="old-price-text">بدلاً من <span class="old-price">1,250 ج.م</span></span>
+                    </div>
+                    <button class="btn-select" onclick="selectProduct('إيدمارك موكا (Edmark Mocha)', 999)">إختر المنتج 🛒</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- واجهة المحاسبة وإدخال البيانات -->
+        <div class="checkout-box" id="checkout-section">
+            <h2>إتمام الطلب 📝 (الشحن مجاني 🚚)</h2>
+            <form id="orderForm">
+                
+                <input type="text" id="fullname" class="form-control" placeholder="الاسم بالكامل" required>
+                
+                <input type="tel" id="phone" class="form-control" placeholder="رقم الموبايل" required>
+                
+                <select id="governorate" class="form-control" required>
+                    <option value="">إختر المحافظة</option>
+                    <option value="القاهرة">القاهرة</option>
+                    <option value="الجيزة">الجيزة</option>
+                    <option value="الإسكندرية">الإسكندرية</option>
+                    <option value="القليوبية">القليوبية</option>
+                    <option value="الدقهلية">الدقهلية</option>
+                    <option value="الشرقية">الشرقية</option>
+                    <option value="المنوفية">المنوفية</option>
+                    <option value="الغربية">الغربية</option>
+                    <option value="البحيرة">البحيرة</option>
+                    <option value="باقي المحافظات">باقي المحافظات</option>
+                </select>
+
+                <input type="text" id="address" class="form-control" placeholder="اسم المدينة و الحي والشارع" required>
+
+                <!-- اختيار المنتج من القائمة -->
+                <select id="productSelect" class="form-control" onchange="onProductChange()" required>
+                    <option value="" data-price="0">اختر المنتج المطلـوب</option>
+                    <option value="معجون أسنان سبلينا" data-price="1650">معجون أسنان سبلينا - 1,650 ج.م (بدلاً من 2,000 ج.م)</option>
+                    <option value="شيك أوف (Shake Off)" data-price="1500">شيك أوف (Shake Off) - 1,500 ج.م (بدلاً من 1,850 ج.م)</option>
+                    <option value="سبلينا كلوروفيل (Splina)" data-price="1500">سبلينا كلوروفيل (Splina) - 1,500 ج.م (بدلاً من 1,850 ج.م)</option>
+                    <option value="سبيرولينا هاوايان" data-price="2500">سبيرولينا هاوايان - 2,500 ج.م (بدلاً من 2,900 ج.م)</option>
+                    <option value="قهوة ترويكا (Cafe Troika)" data-price="1800">قهوة ترويكا (Cafe Troika) - 1,800 ج.م (بدلاً من 2,200 ج.م)</option>
+                    <option value="قهوة كافيه 73 (Cafe 73)" data-price="950">قهوة كافيه 73 - 950 ج.م (بدلاً من 1,200 ج.م)</option>
+                    <option value="قهوة الخميرة الحمراء" data-price="900">قهوة الخميرة الحمراء - 900 ج.م (بدلاً من 1,150 ج.م)</option>
+                    <option value="قهوة الجينسينغ" data-price="800">قهوة الجينسينغ - 800 ج.م (بدلاً من 1,000 ج.م)</option>
+                    <option value="فيري بيري (Very Berry)" data-price="600">فيري بيري (Very Berry) - 600 ج.م (بدلاً من 800 ج.م)</option>
+                    <option value="كو كولاجين (CoCollagen)" data-price="1200">كو كولاجين (CoCollagen) - 1,200 ج.م (بدلاً من 1,500 ج.م)</option>
+                    <option value="بايو إلكسير (Bio-Elixir)" data-price="3600">بايو إلكسير (Bio-Elixir) - 3,600 ج.م (بدلاً من 4,200 ج.م)</option>
+                    <option value="إيدمارك موكا (Edmark Mocha)" data-price="999">إيدمارك موكا (Edmark Mocha) - 999 ج.م (بدلاً من 1,250 ج.م)</option>
+                </select>
+
+                <!-- عداد الكمية -->
+                <div class="quantity-control">
+                    <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+                    <input type="text" id="quantity" class="qty-input" value="1" readonly>
+                    <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+                </div>
+
+                <button type="submit" class="btn-confirm">اضغط هنا لتأكيد الطلب 🚀</button>
+                
+                <a id="whatsappBtn" href="https://wa.me/201507772624" target="_blank" class="btn-whatsapp-direct">
+                    <i class="fab fa-whatsapp"></i> اطلب الان من خلال الواتساب
+                </a>
+
+                <!-- ملخص الطلب المتفاعل -->
+                <div class="order-summary">
+                    <h3><i class="fas fa-shopping-cart"></i> ملخص الطلب</h3>
+                    <div class="summary-row">
+                        <span id="summaryProductName">اسم المنتج</span>
+                        <span id="summaryProductPrice">0 EGP</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>سعر التوصيل</span>
+                        <span style="color: #059669; font-weight: bold;">مجاناً 🎁</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>السعر الإجمالي</span>
+                        <span id="summaryTotalPrice">0 EGP</span>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="success-msg" id="successMsg">
+                🎉 تم إرسال طلبك بنجاح! سيتم التواصل معك لتأكيد الشحن فوراً.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- الأيقونة العائمة للواتساب -->
+    <a href="https://wa.me/201507772624?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%Bb%2C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%A5%D9%8A%D8%AF%D9%85%D8%A7%D8%B1%D9%83" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // إعدادات تليجرام
+        const BOT_TOKEN = '8830629700:AAGVsKb26QjEW0ZIn1Egw5PmKFJCi5MXz5I';
+        const CHAT_ID = '8079635109';
+        const WHATSAPP_PHONE = '201507772624';
+
+        let currentPrice = 0;
+
+        function selectProduct(name, price) {
+            const select = document.getElementById('productSelect');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value.includes(name)) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            onProductChange();
+            document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function onProductChange() {
+            const select = document.getElementById('productSelect');
+            const selectedOption = select.options[select.selectedIndex];
+            currentPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            updateTotal();
+        }
+
+        function changeQty(delta) {
+            const qtyInput = document.getElementById('quantity');
+            let qty = parseInt(qtyInput.value) + delta;
+            if (qty < 1) qty = 1;
+            qtyInput.value = qty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const qty = parseInt(document.getElementById('quantity').value) || 1;
+            const govSelect = document.getElementById('governorate');
+            const productSelect = document.getElementById('productSelect');
+            const productName = productSelect.value || "لم يتم اختيار منتج";
+
+            const grandTotal = currentPrice * qty; // الشحن مجاني تماماً
+
+            // تحديث كارت الملخص
+            document.getElementById('summaryProductName').innerText = `${productName} (x${qty})`;
+            document.getElementById('summaryProductPrice').innerText = `${grandTotal} EGP`;
+            document.getElementById('summaryTotalPrice').innerText = `${grandTotal} EGP`;
+
+            // تحديث رابط الواتساب المباشر
+            const waText = encodeURIComponent(`مرحباً، أود طلب: ${productName}\nالكمية: ${qty}\nالمحافظة: ${govSelect.value || 'لم تحدد'}\nالإجمالي (شحن مجاني): ${grandTotal} EGP`);
+            document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_PHONE}?text=${waText}`;
+        }
+
+        // إرسال البيانات للتليجرام
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullname = document.getElementById('fullname').value;
+            const phone = document.getElementById('phone').value;
+            const gov = document.getElementById('governorate').value;
+            const address = document.getElementById('address').value;
+            const product = document.getElementById('productSelect').value;
+            const qty = document.getElementById('quantity').value;
+            
+            const totalText = document.getElementById('summaryTotalPrice').innerText;
+
+            if(!product) {
+                alert('الرجاء اختيار المنتج أولاً.');
+                return;
+            }
+
+            if(!gov) {
+                alert('الرجاء اختيار المحافظة.');
+                return;
+            }
+
+            const message = `
+📦 **طلب شراء جديد (Edmark Egypt 🇪🇬)**
+-------------------------------
+👤 **الاسم:** ${fullname}
+📱 **الموبايل:** ${phone}
+📍 **المحافظة:** ${gov} (شحن مجاني 🚚)
+🏠 **العنوان التفصيلي:** ${address}
+-------------------------------
+🛒 **المنتج:** ${product}
+🔢 **الكمية:** ${qty}
+💰 **الإجمالي:** ${totalText}
+⏱️ **التاريخ:** ${new Date().toLocaleString('ar-EG')}
+            `;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    document.getElementById('orderForm').reset();
+                    document.getElementById('quantity').value = 1;
+                    updateTotal();
+                    document.getElementById('successMsg').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('successMsg').style.display = 'none';
+                    }, 5000);
+                } else {
+                    alert('حدث خطأ أثناء إرسال الطلب، برجاء المحاولة لاحقاً.');
+                }
+            })
+            .catch(err => {
+                alert('حدث خطأ في الاتصال بالحساب.');
+            });
+        });
+    </script>
+</body>
+</html>
